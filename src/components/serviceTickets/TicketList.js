@@ -27,6 +27,13 @@ export const TicketList = () => {
         [tickets]
     )
 
+    const deleteTicket = (id) => {
+        const fetchOptions = {
+            method: "DELETE",
+        }
+        return fetch(`http://localhost:8088/serviceTickets/${id}`, fetchOptions)
+    }
+    
     return (
         <>
         <div>
@@ -39,6 +46,9 @@ export const TicketList = () => {
                     return <div key={`ticket--${ticket.id}`}>
                         <p className={ticket.emergency ? 'emergency' : ''}> 
                             {ticket.emergency ? "🚑" : ""} <Link to={`/tickets/${ticket.id}`}>{ticket.description}</Link> submitted by {ticket.customer.name} and worked on by {ticket.employee.name}
+                        <button onClick={() => {
+                            deleteTicket(ticket.id)
+                        }}>Delete</button>
                         </p>
                     </div>
                 }
